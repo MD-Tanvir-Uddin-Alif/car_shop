@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{%  load crispy_forms_tags %}
+{% block content %}
+<h1>Welcome</h1>
+<a href="{%url 'edit_profile_page' %}" class="btn btn-secondary">Edit Profile</a>
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Car Name</th>
+        <th scope="col">Time</th>
+      </tr>
+    </thead>
+    <tbody>
+    {%for i in data%}
+      <tr>
+        <td>{{i.name}}</td>
+        <td>{{i.email}}</td>
+        <td>{{i.car}}</td>
+        <td>{{i.created_on}}</td>
+      </tr>
+      {% endfor%}
+    </tbody>
+  </table>
+{% endblock %}

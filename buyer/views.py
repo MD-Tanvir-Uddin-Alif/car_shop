@@ -3,6 +3,7 @@ from django.contrib import messages
 from .forms import SignUP, ChangeUserForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
+from car_model.models import BuyModel
 # Create your views here.
 
 
@@ -18,7 +19,9 @@ def user_signup(request):
     return render(request,'login_&_logout.html',{'form':form, 'type': 'Signup'})
 
 def user_profie(request):
-    return render(request,'profile.html')
+    user = request.user
+    details = BuyModel.objects.filter(buyer=user)
+    return render(request,'profile.html',{'detail':details})
 
 def user_edit_profile(request):
     if request.method == 'POST':
@@ -54,3 +57,5 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect('login_page')
+
+

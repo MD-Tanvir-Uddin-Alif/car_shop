@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import DetailView
 from . import models
 from . import forms
@@ -27,3 +27,22 @@ class detailiView(DetailView):
         context['comments'] = comments
         context['comment_form'] = comment_form
         return context
+    
+
+def buy_view(request, id):
+    if request.method == 'POST':
+        car_model = models.Car_Model.objects.get(id=id)
+        user = request.user
+        if car_model.quantity > 0:
+            buy = models.BuyModel.objects.create(car=car_model, buyer=user)
+            car_model.quantity -= 1
+            car_model.save()
+            
+            return redirect('profile_page')
+
+    return render(request, 'profile.html')
+
+# def User_Buying_details(request):
+#     user = request.user
+#     details = models.BuyModel.objects.filter(buyer=user)
+#     return render(request,'profile.html',{'details':details})

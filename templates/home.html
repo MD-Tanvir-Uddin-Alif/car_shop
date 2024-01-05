@@ -52,7 +52,10 @@
       <p class="card-text">Available : {{d.quantity}}</p>
       <h5 class="card-text"><strong>Brand : </strong>{{d.brand.model_name}}</h5>
       {% if request.user.is_authenticated %}
-      <a href="#" class="btn btn-primary">Buy Now</a>
+      <form method="post" action="{% url 'buy_car' d.id %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Buy Now</button>
+      </form>    
       {% endif %}
     </div>
   </div>

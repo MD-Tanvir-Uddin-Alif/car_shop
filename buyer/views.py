@@ -4,6 +4,7 @@ from .forms import SignUP, ChangeUserForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 from car_model.models import BuyModel
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
@@ -18,11 +19,13 @@ def user_signup(request):
         form = SignUP()
     return render(request,'login_&_logout.html',{'form':form, 'type': 'Signup'})
 
+@login_required
 def user_profie(request):
     user = request.user
     details = BuyModel.objects.filter(buyer=user)
     return render(request,'profile.html',{'detail':details})
 
+@login_required
 def user_edit_profile(request):
     if request.method == 'POST':
         profile_form = ChangeUserForm(request.POST, instance = request.user)
